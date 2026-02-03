@@ -90,7 +90,7 @@ chmod +x package/luci-app-athena-led/root/etc/init.d/athena_led package/luci-app
 ### PassWall & OpenClash ###
 
 # 移除 OpenWrt Feeds 自带的核心库 sing-box,xray-core,
-rm -rf feeds/packages/net/{v2ray-geodata,chinadns-ng,dns2socks,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-libev,shadowsocks-rust,shadowsocksr-libev,simple-obfs,tcping,trojan-plus,tuic-client,v2ray-plugin,xray-plugin,geoview,shadow-tls}
+rm -rf feeds/packages/net/{sing-box,xray-core,v2ray-geodata,chinadns-ng,dns2socks,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-libev,shadowsocks-rust,shadowsocksr-libev,simple-obfs,tcping,trojan-plus,tuic-client,v2ray-plugin,xray-plugin,geoview,shadow-tls}
 git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/passwall-packages
 
 # 移除 OpenWrt Feeds 过时的LuCI版本
