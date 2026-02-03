@@ -14,6 +14,27 @@ sed -i "s#_('Firmware Version'), (L\.isObject(boardinfo\.release) ? boardinfo\.r
                 }, [ 'Built by Roc $(date "+%Y-%m-%d %H:%M:%S")' ])\n \
             ]),#" feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
 
+# 修改默认WIFI名称和密码
+WRT_SSID="W"
+WRT_WORD="123456789"
+WIFI_SH=$(find ./target/linux/{mediatek/filogic,qualcommax}/base-files/etc/uci-defaults/ -type f -name "*set-wireless.sh" 2>/dev/null)
+WIFI_UC="./package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc"
+if [ -f "$WIFI_SH" ]; then
+	#修改WIFI名称
+	sed -i "s/BASE_SSID='.*'/BASE_SSID='$WRT_SSID'/g" $WIFI_SH
+	#修改WIFI密码
+	sed -i "s/BASE_WORD='.*'/BASE_WORD='$WRT_WORD'/g" $WIFI_SH
+elif [ -f "$WIFI_UC" ]; then
+	#修改WIFI名称
+	sed -i "s/ssid='.*'/ssid='$WRT_SSID'/g" $WIFI_UC
+	#修改WIFI密码
+	sed -i "s/key='.*'/key='$WRT_WORD'/g" $WIFI_UC
+	# #修改WIFI地区
+	# sed -i "s/country='.*'/country='CN'/g" $WIFI_UC
+	# #修改WIFI加密
+	# sed -i "s/encryption='.*'/encryption='psk2+ccmp'/g" $WIFI_UC
+fi
+
 # 移除luci-app-attendedsysupgrade软件包
 sed -i "/attendedsysupgrade/d" $(find ./feeds/luci/collections/ -type f -name "Makefile")
 
@@ -68,8 +89,8 @@ chmod +x package/luci-app-athena-led/root/etc/init.d/athena_led package/luci-app
 
 ### PassWall & OpenClash ###
 
-# 移除 OpenWrt Feeds 自带的核心库
-rm -rf feeds/packages/net/{xray-core,v2ray-geodata,sing-box,chinadns-ng,dns2socks,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-libev,shadowsocks-rust,shadowsocksr-libev,simple-obfs,tcping,trojan-plus,tuic-client,v2ray-plugin,xray-plugin,geoview,shadow-tls}
+# 移除 OpenWrt Feeds 自带的核心库 sing-box,xray-core,
+rm -rf feeds/packages/net/{v2ray-geodata,chinadns-ng,dns2socks,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-libev,shadowsocks-rust,shadowsocksr-libev,simple-obfs,tcping,trojan-plus,tuic-client,v2ray-plugin,xray-plugin,geoview,shadow-tls}
 git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/passwall-packages
 
 # 移除 OpenWrt Feeds 过时的LuCI版本
@@ -85,9 +106,11 @@ echo "baidu.com"  > package/luci-app-passwall/luci-app-passwall/root/usr/share/p
 # 添加自己的软件包
 #git clone --depth=1 https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
 
+git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-momo package/luci-app-momo
 git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-nikki package/luci-app-nikki
 git clone --depth=1 https://github.com/EasyTier/luci-app-easytier package/luci-app-easytier
 
 
+OpenWrt-momo
 ./scripts/feeds update -a
 ./scripts/feeds install -a
