@@ -106,11 +106,11 @@ echo "baidu.com"  > package/luci-app-passwall/luci-app-passwall/root/usr/share/p
 # 添加自己的软件包
 #git clone --depth=1 https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
 
-#git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-momo package/luci-app-momo
+git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-momo package/luci-app-momo
 git clone --depth=1 https://github.com/EasyTier/luci-app-easytier package/luci-app-easytier
 git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-nikki package/luci-app-nikki
 #git clone --depth=1 https://github.com/yichya/luci-app-xray package/luci-app-xray
-git clone --depth=1 https://github.com/quanljh/luci-app-simple-xray package/luci-app-simple-xray
+git clone --depth=1 https://github.com/kenxp/luci-app-simple-xray package/luci-app-simple-xray
 
 
 OpenWrt-momo
